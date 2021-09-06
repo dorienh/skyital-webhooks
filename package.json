@@ -1,0 +1,18 @@
+{
+  "name": "skyital-webhooks",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon --ignore node_modules ./index.js",
+    "start": "NODE_ENV=production node ./index.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "express": "^4.17.1",
+    "http-errors": "~1.6.3",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
