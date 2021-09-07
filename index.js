@@ -68,9 +68,9 @@ const logger = new winston.createLogger({
 // block requests from unknown IPs
 server.use((request, response, next) => {
   // if an IP isn't in the white list
-  if (!config.IPS.includes(request.socket.remoteAddress)) {
+  if (!config.IPS.includes(request.socket.remoteAddress.replace(/^.*:/, ''))) {
     // then raise an error
-    next(createHttpError(request.socket.remoteAddress));
+    next(createHttpError(STATUS_FORBIDDEN));
     // and terminate
     return;
   }
