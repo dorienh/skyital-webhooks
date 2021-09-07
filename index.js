@@ -30,7 +30,7 @@ const config = {
   PORT: IS_PRODUCTION ? 80 : 80, // a port to listen to; if prod, then 80, and 3000 otherwise (had to change to 80 as tradingview only allows to send to port 80
   LOGS_FILE: 'logs.txt', // a file for logs to write to on production
   IPS: ['localhost', '::1', '127.0.0.1','::ffff:52.89.214.238','::ffff:34.212.75.30','::ffff:54.218.53.128','::ffff:52.32.178.7'], // a white list of IPs to get requests from
-  URL_TRADE: 'localhost:81', // a URL for the trade webhook rule
+  URL_TRADE: 'localhost:81/frostybot', // a URL for the trade webhook rule
   URL_EXIT: 'https://zignaly.com/api/signals.php', // a URL for the exit webhook rule
   URL_REVERSE_1: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
   URL_REVERSE_2: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
