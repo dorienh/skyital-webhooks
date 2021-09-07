@@ -27,9 +27,9 @@ const STATUS_INTERNAL_SERVER_ERROR = 500;
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const config = {
-  PORT: IS_PRODUCTION ? 80 : 3000, // a port to listen to; if prod, then 80, and 3000 otherwise (had to change to 80 as tradingview only allows to send to port 80
+  PORT: IS_PRODUCTION ? 80 : 80, // a port to listen to; if prod, then 80, and 3000 otherwise (had to change to 80 as tradingview only allows to send to port 80
   LOGS_FILE: 'logs.txt', // a file for logs to write to on production
-  IPS: ['localhost', '::1', '127.0.0.1','52.89.214.238','34.212.75.30','54.218.53.128','52.32.178.7'], // a white list of IPs to get requests from
+  IPS: ['localhost', '::1', '127.0.0.1','::ffff:52.89.214.238','::ffff:34.212.75.30','::ffff:54.218.53.128','::ffff:52.32.178.7'], // a white list of IPs to get requests from
   URL_TRADE: 'http://postman-echo.com/post', // a URL for the trade webhook rule
   URL_EXIT: 'http://postman-echo.com/post', // a URL for the exit webhook rule
   URL_REVERSE_1: 'http://postman-echo.com/post', // a URL for the reverse composite webhook rule
