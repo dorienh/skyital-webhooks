@@ -153,7 +153,7 @@ server.post('/', async (request, response, next) => {
       await axios({
         url: config.URL_EXIT,
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', 'charset':'utf-8' },
         data: body,
       });
     // if error
@@ -176,7 +176,7 @@ server.post('/', async (request, response, next) => {
       await axios({
         url: config.URL_REVERSE_1,
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', 'charset':'utf-8' },
         data: {
           key: jsonBody.key,
           pair: jsonBody.pair,
@@ -203,7 +203,7 @@ server.post('/', async (request, response, next) => {
       await axios({
         url: config.URL_REVERSE_1,
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json' , 'charset':'utf-8'},
         data: {
           key: jsonBody.key,
           pair: jsonBody.pair,
