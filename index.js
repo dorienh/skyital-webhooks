@@ -201,7 +201,7 @@ server.post('/', async (request, response, next) => {
     // try sending a request
     try {
       await axios({
-        url: config.URL_REVERSE_1,
+        url: config.URL_REVERSE_2,
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         data: {
