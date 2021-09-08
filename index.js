@@ -165,10 +165,14 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'application/json' },
         data: body,
       });
+      logger.info(`Sent to config.URL_EXIT at ${new Date().toISOString()} webhook content ${body}`);
+
     // if error
     } catch (err) {
       // then raise an internal server error
       next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
+      logger.info(`Error sending exit`);
+
       // and terminate
       return;
     }
