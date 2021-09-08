@@ -38,7 +38,7 @@ const config = {
     '::ffff:54.218.53.128',
     '::ffff:52.32.178.7',
   ], // a white list of IPs to get requests from
-  URL_TRADE: 'localhost:81/frostybot', // a URL for the trade webhook rule
+  URL_TRADE: 'localhost:999/frostybot', // a URL for the trade webhook rule
   URL_EXIT: 'https://zignaly.com/api/signals.php', // a URL for the exit webhook rule
   URL_REVERSE_1: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
   URL_REVERSE_2: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
