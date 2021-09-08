@@ -38,7 +38,7 @@ const config = {
     '::ffff:54.218.53.128',
     '::ffff:52.32.178.7',
   ], // a white list of IPs to get requests from
-  URL_TRADE: 'localhost:999/frostybot', // a URL for the trade webhook rule
+  URL_TRADE: 'http://localhost:999/frostybot', // a URL for the trade webhook rule
   URL_EXIT: 'https://zignaly.com/api/signals.php', // a URL for the exit webhook rule
   URL_REVERSE_1: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
   URL_REVERSE_2: 'https://zignaly.com/api/signals.php', // a URL for the reverse composite webhook rule
@@ -74,7 +74,7 @@ server.use((request, response, next) => {
   // if an IP isn't in the white list
   if (!config.IPS.includes(request.ip)) {
     // then raise an error
-    next(createHttpError(STATUS_FORBIDDEN));
+    next(createHttpError(STATUS_FORBIDDEN, `IP ${request.ip} is forbidden`));
     // and terminate
     return;
   }
@@ -105,7 +105,7 @@ server.post('/', async (request, response, next) => {
   // if the body is empty
   if (typeof body !== 'string' || !body.length) {
     // then raise a bad request error
-    next(createHttpError(STATUS_BAD_REQUEST));
+    next(createHttpError(STATUS_BAD_REQUEST, 'Body is empty'));
     // and terminate
     return;
   }
@@ -123,10 +123,11 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'text/plain' },
         data: body,
       });
+      logger.info(`Sent to ${config.URL_TRADE} at ${new Date().toISOString()}`);
     // if error
     } catch (err) {
       // then raise an internal server error
-      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
+      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR, `Failed to send to ${config.URL_TRADE}`));
       // and terminate
       return;
     }
@@ -145,7 +146,7 @@ server.post('/', async (request, response, next) => {
   // if error
   } catch (err) {
     // then raise a bad request error
-    next(createHttpError(STATUS_BAD_REQUEST));
+    next(createHttpError(STATUS_BAD_REQUEST, 'No valid JSON found'));
     // and terminate
     return;
   }
@@ -160,10 +161,11 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'application/json' },
         data: body,
       });
+      logger.info(`Sent to ${config.URL_EXIT} at ${new Date().toISOString()}`);
     // if error
     } catch (err) {
       // then raise an internal server error
-      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
+      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR, `Failed to send to ${config.URL_EXIT}`));
       // and terminate
       return;
     }
@@ -191,10 +193,11 @@ server.post('/', async (request, response, next) => {
           type: 'exit',
         },
       });
+      logger.info(`Sent to ${config.URL_REVERSE_1} at ${new Date().toISOString()}`);
     // if error
     } catch (err) {
       // then raise an internal server errror
-      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
+      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR, `Failed to send to ${config.URL_REVERSE_1}`));
       // and terminate
       return;
     }
@@ -220,10 +223,11 @@ server.post('/', async (request, response, next) => {
           leverage: jsonBody.entryLeverage,
         },
       });
+      logger.info(`Sent to ${config.URL_REVERSE_2} at ${new Date().toISOString()}`);
     // if error
     } catch (err) {
       // then raise an internal server error
-      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
+      next(createHttpError(STATUS_INTERNAL_SERVER_ERROR, `Failed to send to ${config.URL_REVERSE_2}`));
       // and terminate
       return;
     }
@@ -235,19 +239,19 @@ server.post('/', async (request, response, next) => {
   }
 
   // raise an error if the body doesn't meet any of the above conditions
-  next(createHttpError(STATUS_BAD_REQUEST));
+  next(createHttpError(STATUS_BAD_REQUEST, `Didn't meet any rules`));
 });
 
 // handle requests of other methods to the / path
 server.all('/', (request, response, next) => {
   // raise a method not allowed error
-  next(createHttpError(STATUS_METHOD_NOT_ALLOWED));
+  next(createHttpError(STATUS_METHOD_NOT_ALLOWED, `Method ${request.method} not allowed for ${request.path}`));
 });
 
 // handle requests for paths other than the / path
 server.use((request, response, next) => {
   // raise a not found error
-  next(createHttpError(STATUS_NOT_FOUND));
+  next(createHttpError(STATUS_NOT_FOUND, `Path ${request.path} not found`));
 });
 
 // handle any errors
