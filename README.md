@@ -25,4 +25,15 @@ $ npm run start (on production)
 ``
 
 ## Deployment
-To be discussed...
+I suggest a very effective and straightforward way to deploy and run. Say, you are on Linux and your machine is also on Linux with git installed, then:
+$ ssh ... // ssh into your machine
+$ cd / // go to the root
+$ git clone ... // clone your repository
+$ cd ... // go to the cloned repo
+$ npm i
+$ apt-get install tmux // it's a terminal multiplexer allowing you to to run detached terminals; use sudo if lacking privileges; see https://github.com/tmux/tmux/wiki for more info
+$ tmux // open a tmux terminal
+$ npm run start // start the server
+$ Ctrl+b d // detach from the terminal; press in sequense
+$ tmux ls // list available terminals to attach to
+$ tmux attach -t 0 // attach to a terminal with the 0 tag
