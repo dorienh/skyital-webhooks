@@ -123,11 +123,16 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'text/plain' },
         data: body,
       });
+
+      logger.info(`Sent to config.URL_TRADE at ${new Date().toISOString()} webhook content ${body}`);
+
     // if error
     } catch (err) {
       // then raise an internal server error
       next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
       // and terminate
+      logger.info(`Error sending trade:`);
+
       return;
     }
 
