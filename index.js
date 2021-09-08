@@ -123,16 +123,11 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'text/plain' },
         data: body,
       });
-
-      logger.info(`Sent to config.URL_TRADE at ${new Date().toISOString()} webhook content ${body}`);
-
     // if error
     } catch (err) {
       // then raise an internal server error
       next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
       // and terminate
-      logger.info(`Error sending to config.URL_TRADE at ${new Date().toISOString()} webhook content ${body}`);
-
       return;
     }
 
@@ -165,14 +160,10 @@ server.post('/', async (request, response, next) => {
         headers: { 'content-type': 'application/json' },
         data: body,
       });
-      next(logger.info(`Sent to config.URL_EXIT at ${new Date().toISOString()} webhook content ${body}`));
-
     // if error
     } catch (err) {
       // then raise an internal server error
       next(createHttpError(STATUS_INTERNAL_SERVER_ERROR));
-      next(logger.info(`Error sending to config.URL_EXIT at ${new Date().toISOString()} webhook content ${body}`));
-
       // and terminate
       return;
     }
